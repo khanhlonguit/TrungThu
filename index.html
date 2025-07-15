@@ -161,8 +161,36 @@
                 </div>
             </div>
         </section>
-    </main>
-    <!-- Footer -->
+        <!-- Danh sách Mạnh Thường Quân -->
+        <section id="danh-sach-manh-thuong-quan" class="py-20 bg-gradient-to-br from-yellow-50 via-orange-50 to-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-extrabold gradient-text section-title">Danh Sách Mạnh Thường Quân Đã Đóng Góp</h3>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Xin trân trọng cảm ơn những tấm lòng vàng đã chung tay cùng chương trình!</p>
+                </div>
+                <div class="flex justify-end mb-4">
+    <button onclick="fetchDonors()" class="bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-bold py-2 px-6 rounded-full shadow hover:scale-105 transition-transform duration-300">
+        Tải lại danh sách
+    </button>
+</div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-2xl shadow-lg">
+                        <thead>
+                            <tr class="bg-orange-100 text-orange-700">
+                                <th class="py-3 px-4 text-left">Tên</th>
+                                <th class="py-3 px-4 text-left">Số tiền</th>
+                                <th class="py-3 px-4 text-left">Lời nhắn</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donor-list">
+                            <tr><td colspan="3" class="text-center text-gray-400">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                    <div id="donor-pagination" class="flex justify-center mt-4"></div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
     <footer class="bg-gradient-to-br from-orange-600 via-orange-700 to-gray-900 text-white mt-16">
         <div class="container mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="text-center md:text-left">
@@ -190,5 +218,6 @@
             });
         }
     </script>
+    <script src="donor.js"></script>
 </body>
 </html>
