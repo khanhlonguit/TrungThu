@@ -1,13 +1,14 @@
 let donorsData = [];
 let currentPage = 1;
-const rowsPerPage = 10;
+const rowsPerPage = 4;
 
 async function fetchDonors() {
     const url = "https://opensheet.elk.sh/1uSXrufCixUEbfbF0iyEZPQ6D8kq_g3CN8cPaOACc-TI/Trang%20t%C3%ADnh1";
     const res = await fetch(url);
     const data = await res.json();
-    // Lọc bỏ dòng tiêu đề và dòng trống
-    donorsData = data.filter(row => row["Họ tên"] && row["Số tiền"]);
+    //donorsData = data.filter(row => row["Họ tên"] && row["Số tiền"]);
+    // Lọc bỏ dòng tiêu đề
+    donorsData = data
     currentPage = 1;
     renderDonors();
     renderPagination();
@@ -28,8 +29,8 @@ function renderDonors() {
     pageData.forEach(row => {
         tbody.innerHTML += `
             <tr class="border-b">
-                <td class="py-3 px-4 font-semibold">${row["Họ tên"]}</td>
-                <td class="py-3 px-4 text-green-600 font-bold">${Number(row["Số tiền"]).toLocaleString('vi-VN')}đ</td>
+                <td class="py-3 px-4 font-semibold">${row["Họ tên"] ? row["Họ tên"] : ""}</td>
+                <td class="py-3 px-4 text-green-600 font-bold">${row["Số tiền"] ? Number(row["Số tiền"]).toLocaleString('vi-VN') + "đ" : ""}</td>
                 <td class="py-3 px-4 italic text-gray-500">${row["Lời Nhắn"] || ""}</td>
             </tr>
         `;
