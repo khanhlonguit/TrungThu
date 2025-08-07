@@ -30,7 +30,14 @@ function renderDonors() {
         tbody.innerHTML += `
             <tr class="border-b">
                 <td class="py-3 px-4 font-semibold">${row["Họ tên"] ? row["Họ tên"] : ""}</td>
-                <td class="py-3 px-4 text-green-600 font-bold">${row["Số tiền"] ? Number(row["Số tiền"]).toLocaleString('vi-VN') + "đ" : ""}</td>
+                <td class="py-3 px-4 text-green-600 font-bold">${
+                    typeof row["Số tiền"] === 'number'
+                        ? row["Số tiền"].toLocaleString('vi-VN') + "đ"
+                        : (typeof row["Số tiền"] === 'string' && !isNaN(Number(row["Số tiền"]))
+                            ? Number(row["Số tiền"]).toLocaleString('vi-VN') + "đ"
+                            : (row["Số tiền"] || "")
+                    )}
+                </td>
                 <td class="py-3 px-4 italic text-gray-500">${row["Lời Nhắn"] || ""}</td>
             </tr>
         `;
