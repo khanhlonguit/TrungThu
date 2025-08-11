@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng Ký Tình Nguyện Viên | Trung Thu Cho Em 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(90deg, #f97316, #f59e0b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-yellow-50 to-white text-gray-800 min-h-screen flex flex-col">
+  <header class="bg-white/90 backdrop-blur sticky top-0 z-50 shadow">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-orange-600 font-semibold hover:underline flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Trở về trang chủ
+      </a>
+      <h1 class="text-xl md:text-2xl font-extrabold gradient-text tracking-tight">Trung Thu Cho Em 2025</h1>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="py-12 md:py-16">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight gradient-text uppercase">ĐƠN ĐĂNG KÝ TÌNH NGUYỆN VIÊN</h2>
+          <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Hãy điền đầy đủ thông tin bên dưới để cùng chung tay mang Trung Thu ấm áp đến các em nhỏ.</p>
+        </div>
+        <div class="max-w-2xl mx-auto">
+          <div id="volunteer-form-wrapper" class="bg-white/95 rounded-2xl shadow-xl p-6 md:p-8">
+            <form id="volunteer-form" class="space-y-6">
+              <div>
+                <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">Họ và tên của bạn</label>
+                <input id="fullName" name="fullName" type="text" required class="w-full rounded-xl border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 p-3 bg-white placeholder-gray-400" placeholder="Nguyễn Văn A" />
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Số điện thoại</label>
+                <input id="phone" name="phone" type="tel" required placeholder="09xxxxxxxx" class="w-full rounded-xl border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 p-3 bg-white placeholder-gray-400" />
+              </div>
+              <div>
+                <label for="facebook" class="block text-sm font-semibold text-gray-700 mb-2">Link Facebook</label>
+                <input id="facebook" name="facebook" type="url" required placeholder="https://www.facebook.com/ten_cua_ban" class="w-full rounded-xl border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 p-3 bg-white placeholder-gray-400" />
+              </div>
+              <!-- Ảnh đại diện làm thẻ tình nguyện -->
+              <div class="mt-4">
+                <label for="avatarImage" class="block text-sm font-semibold text-gray-700 mb-2">Ảnh đại diện (làm thẻ tình nguyện)</label>
+                <input id="avatarImage" name="avatarImage" type="file" accept="image/*" required class="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+                <p class="mt-2 text-xs text-gray-500">Vui lòng tải ảnh rõ mặt, nền sáng. Định dạng JPG/PNG.</p>
+                <img id="avatar-preview" alt="Xem trước ảnh đại diện" class="mt-3 max-h-48 rounded-lg border border-orange-200 hidden" />
+              </div>
+              <fieldset>
+                <legend class="block text-sm font-semibold text-gray-700 mb-2">Bạn có xe máy để di chuyển không?</legend>
+                <div class="flex flex-col sm:flex-row gap-3">
+                  <label class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-orange-100">
+                    <input type="radio" name="hasMotorbike" value="Yes" required class="text-orange-600" />
+                    <span>Có</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-orange-100">
+                    <input type="radio" name="hasMotorbike" value="No" class="text-orange-600" />
+                    <span>Không</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="block text-sm font-semibold text-gray-700 mb-2">Bạn đã có bạn đồng hành (partner) đi cùng chưa?</legend>
+                <div class="flex flex-col sm:flex-row gap-3">
+                  <label class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-orange-100">
+                    <input type="radio" name="hasPartner" value="Yes" required class="text-orange-600" />
+                    <span>Mình đã có partner</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-orange-100">
+                    <input type="radio" name="hasPartner" value="No" class="text-orange-600" />
+                    <span>Mình đi một mình</span>
+                  </label>
+                </div>
+              </fieldset>
+              <!-- Tên bạn đồng hành (nếu có) -->
+              <div id="partnerNameGroup" class="hidden">
+                <label for="partnerName" class="block text-sm font-semibold text-gray-700 mb-2">Tên bạn đồng hành (partner)</label>
+                <input id="partnerName" name="partnerName" type="text" placeholder="Ví dụ: Trần Thị B" class="w-full rounded-xl border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 p-3 bg-white placeholder-gray-400" />
+                <p class="mt-2 text-xs text-gray-500">Chỉ cần nhập khi bạn chọn "Mình đã có partner".</p>
+              </div>
+              <div>
+                <label for="shirtSize" class="block text-sm font-semibold text-gray-700 mb-2">Chọn size áo của bạn</label>
+                <select id="shirtSize" name="shirtSize" required class="w-full rounded-xl border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 p-3 bg-white">
+                  <option value="" disabled selected>Chọn size</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </div>
+              <!-- Chi phí tham gia -->
+              <div class="mt-6">
+                <div class="bg-orange-50 border border-orange-200 text-orange-800 rounded-xl p-4">
+                  <p class="text-sm md:text-base">
+                    <strong>Chi phí tham gia:</strong> 500.000đ. 80% chi phí sẽ được dùng để mua quà tặng cho chương trình, 20% chi phí dùng để chi trả ăn uống trong suốt quá trình tham gia.
+                  </p>
+                </div>
+              </div>
+              <!-- Thông tin chuyển khoản -->
+              <div class="mt-6">
+                <div class="rounded-2xl border border-orange-200 bg-white p-4 md:p-5 shadow-sm">
+                  <h3 class="font-semibold text-orange-700 mb-3">Thông tin chuyển khoản (bắt buộc)</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <div class="md:col-span-2 space-y-2 text-sm">
+                      <p><strong>Ngân hàng:</strong> Ngân hàng Quân đội (MB Bank)</p>
+                      <p><strong>Chủ tài khoản:</strong> TRẦN VƯƠNG TIẾN MINH</p>
+                      <p class="flex items-baseline gap-2"><strong>Số tài khoản:</strong> <span class="font-bold tracking-wide">890008989</span></p>
+                      <p><strong>Nội dung chuyển khoản:</strong> <code class="bg-gray-100 px-1.5 py-0.5 rounded">[Họ tên] - TNV TTCE 2025</code></p>
+                      <p class="text-gray-600">Vui lòng hoàn tất chuyển khoản trước khi gửi đơn và tải ảnh/biên lai xác nhận bên dưới.</p>
+                    </div>
+                    <div class="flex md:justify-end">
+                      <div class="w-32 h-32 bg-white border-2 border-orange-200 rounded-lg flex items-center justify-center">
+                        <img src="maQR.jpg" alt="QR chuyển khoản MB Bank" class="w-28 h-28"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Upload ảnh xác nhận -->
+              <div class="mt-6">
+                <label for="transferImage" class="block text-sm font-semibold text-gray-700 mb-2">Ảnh xác nhận chuyển khoản</label>
+                <input id="transferImage" name="transferImage" type="file" accept="image/*" required class="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+                <p class="mt-2 text-xs text-gray-500">Tải lên ảnh biên lai/ảnh màn hình đã chuyển khoản.</p>
+                <img id="transfer-preview" alt="Xem trước ảnh chuyển khoản" class="mt-3 max-h-48 rounded-lg border border-orange-200 hidden" />
+              </div>
+              <div class="pt-2">
+                <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300">Gửi đơn đăng ký</button>
+              </div>
+            </form>
+            
+          </div>
+          <div id="volunteer-success" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center">
+            <div class="text-2xl md:text-3xl font-extrabold text-orange-600 mb-3">Đăng ký thành công! ❤️</div>
+            <p class="text-gray-700">Cảm ơn bạn đã chung tay cùng chúng tôi. Ban tổ chức sẽ liên hệ bạn trong thời gian sớm nhất.</p>
+            <a href="index.html" class="inline-block mt-6 text-orange-600 font-semibold hover:underline">Về trang chủ</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gradient-to-br from-orange-600 via-orange-700 to-gray-900 text-white mt-auto">
+    <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-left">
+        <h3 class="text-xl font-bold mb-1">Nhóm Những Người Bạn</h3>
+        <p class="text-gray-300 text-sm">&copy; 2025 | Một dự án vì cộng đồng của Nhóm Những Người Bạn</p>
+      </div>
+      <a href="index.html" class="bg-white text-orange-600 font-semibold px-4 py-2 rounded-full hover:bg-orange-50 transition">Về trang chủ</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // Cấu hình: DÁN URL web app Apps Script sau khi triển khai và API key nếu dùng
+      const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyWRJeJydPra9ZYtByyKobBjTo5lPoQy3gHUhwCLnwRIs2b9X35p2OdQT7Uvw-iywFnug/exec';
+      const API_KEY = 'OPTIONAL_SECRET_KEY';
+
+      const form = document.getElementById('volunteer-form');
+      if (!form) return;
+      // Hiển thị/ẩn field tên partner theo lựa chọn
+      const partnerRadios = document.querySelectorAll('input[name="hasPartner"]');
+      const partnerGroup = document.getElementById('partnerNameGroup');
+      const partnerInput = document.getElementById('partnerName');
+      const updatePartnerVisibility = () => {
+        const selected = Array.from(partnerRadios).find(r => r.checked);
+        if (selected && selected.value === 'Yes') {
+          partnerGroup.classList.remove('hidden');
+          partnerInput.setAttribute('required', 'required');
+        } else {
+          partnerGroup.classList.add('hidden');
+          partnerInput.removeAttribute('required');
+          partnerInput.value = '';
+        }
+      };
+      partnerRadios.forEach(r => r.addEventListener('change', updatePartnerVisibility));
+      updatePartnerVisibility();
+      // Preview ảnh đại diện
+      const avatarInput = document.getElementById('avatarImage');
+      const avatarPreview = document.getElementById('avatar-preview');
+      if (avatarInput && avatarPreview) {
+        avatarInput.addEventListener('change', function () {
+          const file = this.files && this.files[0];
+          if (!file) { avatarPreview.classList.add('hidden'); return; }
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            avatarPreview.src = e.target && e.target.result ? String(e.target.result) : '';
+            avatarPreview.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      // Preview ảnh chuyển khoản
+      const fileInput = document.getElementById('transferImage');
+      const preview = document.getElementById('transfer-preview');
+      if (fileInput && preview) {
+        fileInput.addEventListener('change', function () {
+          const file = this.files && this.files[0];
+          if (!file) { preview.classList.add('hidden'); return; }
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target && e.target.result ? String(e.target.result) : '';
+            preview.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+      // Tiện ích đọc file thành DataURL (base64)
+      function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // Submit lên Google Apps Script (ghi vào Google Sheet)
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Ẩn lỗi cũ (nếu có)
+        let errorEl = document.getElementById('volunteer-error');
+        if (!errorEl) {
+          errorEl = document.createElement('div');
+          errorEl.id = 'volunteer-error';
+          errorEl.className = 'mt-4 hidden text-red-600 text-sm';
+          form.appendChild(errorEl);
+        }
+        errorEl.classList.add('hidden');
+        errorEl.textContent = '';
+
+        // Lấy nút submit để disable khi đang gửi
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Đang gửi...';
+        }
+
+        try {
+          const fullName = (document.getElementById('fullName') || {}).value || '';
+          const phone = (document.getElementById('phone') || {}).value || '';
+          const facebook = (document.getElementById('facebook') || {}).value || '';
+          const hasMotorbike = (document.querySelector('input[name="hasMotorbike"]:checked') || {}).value || '';
+          const hasPartner = (document.querySelector('input[name="hasPartner"]:checked') || {}).value || '';
+          const partnerName = (document.getElementById('partnerName') || {}).value || '';
+          const shirtSize = (document.getElementById('shirtSize') || {}).value || '';
+
+          const avatarFile = (document.getElementById('avatarImage') || {}).files?.[0];
+          const transferFile = (document.getElementById('transferImage') || {}).files?.[0];
+
+          const [avatarDataUrl, transferDataUrl] = await Promise.all([
+            avatarFile ? readFileAsDataURL(avatarFile) : Promise.resolve(''),
+            transferFile ? readFileAsDataURL(transferFile) : Promise.resolve(''),
+          ]);
+
+          const payload = {
+            apiKey: API_KEY,
+            submittedAt: new Date().toISOString(),
+            fullName,
+            phone,
+            facebook,
+            hasMotorbike,
+            hasPartner,
+            partnerName,
+            shirtSize,
+            avatar: avatarFile ? { name: avatarFile.name, type: avatarFile.type, dataUrl: avatarDataUrl } : null,
+            transfer: transferFile ? { name: transferFile.name, type: transferFile.type, dataUrl: transferDataUrl } : null,
+          };
+
+          const resp = await fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            // Dùng text/plain để tránh preflight CORS
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload),
+          });
+
+          if (!resp.ok && resp.type !== 'opaque') {
+            throw new Error('Gửi dữ liệu thất bại.');
+          }
+
+          // Hiển thị thành công
+          const wrapper = document.getElementById('volunteer-form-wrapper');
+          const success = document.getElementById('volunteer-success');
+          if (wrapper) wrapper.classList.add('hidden');
+          if (success) {
+            success.classList.remove('hidden');
+            success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } catch (err) {
+          errorEl.textContent = 'Có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại hoặc liên hệ BTC.';
+          errorEl.classList.remove('hidden');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
