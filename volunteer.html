@@ -166,18 +166,35 @@
   <script>
     (function () {
       // Cấu hình: DÁN URL web app Apps Script sau khi triển khai và API key nếu dùng
-      const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyWRJeJydPra9ZYtByyKobBjTo5lPoQy3gHUhwCLnwRIs2b9X35p2OdQT7Uvw-iywFnug/exec';
+      const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfebyWRJeJydPra9ZYtByyKobBjTo5lPoQy3gHUhwCLnwRIs2b9X35p2OdQT7Uvw-iywFnug/exec';
       const API_KEY = 'OPTIONAL_SECRET_KEY';
 
       const form = document.getElementById('volunteer-form');
       if (!form) return;
+
+      // Tự động scroll đến field bị lỗi đầu tiên
+      function scrollToFirstError() {
+        const firstErrorField = form.querySelector('input:invalid, select:invalid, textarea:invalid');
+        if (firstErrorField) {
+          // Delay để đảm bảo validation message hiện
+          setTimeout(() => {
+            firstErrorField.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center',
+              inline: 'nearest'
+            });
+            firstErrorField.focus();
+          }, 100);
+        }
+      }
+
       // Hiển thị/ẩn field tên partner theo lựa chọn
       const partnerRadios = document.querySelectorAll('input[name="hasPartner"]');
       const partnerGroup = document.getElementById('partnerNameGroup');
       const partnerInput = document.getElementById('partnerName');
       const updatePartnerVisibility = () => {
         const selected = Array.from(partnerRadios).find(r => r.checked);
-        if (selected && selected.value === 'Yes') {
+        if (selected && selected.value === 'DaCo') {
           partnerGroup.classList.remove('hidden');
           partnerInput.setAttribute('required', 'required');
         } else {
@@ -188,6 +205,7 @@
       };
       partnerRadios.forEach(r => r.addEventListener('change', updatePartnerVisibility));
       updatePartnerVisibility();
+
       // Preview ảnh đại diện
       const avatarInput = document.getElementById('avatarImage');
       const avatarPreview = document.getElementById('avatar-preview');
@@ -203,6 +221,7 @@
           reader.readAsDataURL(file);
         });
       }
+
       // Preview ảnh chuyển khoản
       const fileInput = document.getElementById('transferImage');
       const preview = document.getElementById('transfer-preview');
@@ -218,6 +237,7 @@
           reader.readAsDataURL(file);
         });
       }
+
       // Tiện ích đọc file thành DataURL (base64)
       function readFileAsDataURL(file) {
         return new Promise((resolve, reject) => {
@@ -231,6 +251,15 @@
       // Submit lên Google Apps Script (ghi vào Google Sheet)
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
+
+        // Kiểm tra validation trước khi gửi
+        if (!form.checkValidity()) {
+          // Trigger validation UI mặc định
+          form.reportValidity();
+          // Scroll đến field lỗi đầu tiên
+          scrollToFirstError();
+          return;
+        }
 
         // Ẩn lỗi cũ (nếu có)
         let errorEl = document.getElementById('volunteer-error');
