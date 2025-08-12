@@ -194,7 +194,7 @@
       const partnerInput = document.getElementById('partnerName');
       const updatePartnerVisibility = () => {
         const selected = Array.from(partnerRadios).find(r => r.checked);
-        if (selected && selected.value === 'DaCo') {
+        if (selected && selected.value === 'Yes') {
           partnerGroup.classList.remove('hidden');
           partnerInput.setAttribute('required', 'required');
         } else {
