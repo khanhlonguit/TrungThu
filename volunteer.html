@@ -17,6 +17,11 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin { animation: spin 1s linear infinite; }
   </style>
 </head>
 <body class="bg-gradient-to-br from-orange-50 via-yellow-50 to-white text-gray-800 min-h-screen flex flex-col">
@@ -205,6 +210,30 @@
       partnerRadios.forEach(r => r.addEventListener('change', updatePartnerVisibility));
       updatePartnerVisibility();
 
+      // Hàm nén ảnh trước khi gửi
+      function resizeImage(file, maxWidth = 800, quality = 0.8) {
+        return new Promise((resolve) => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          
+          img.onload = () => {
+            // Tính toán kích thước mới
+            const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            
+            // Vẽ ảnh đã resize
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            // Convert về blob với chất lượng nén
+            canvas.toBlob(resolve, 'image/jpeg', quality);
+          };
+          
+          img.src = URL.createObjectURL(file);
+        });
+      }
+
       // Preview ảnh đại diện
       const avatarInput = document.getElementById('avatarImage');
       const avatarPreview = document.getElementById('avatar-preview');
@@ -237,14 +266,42 @@
         });
       }
 
-      // Tiện ích đọc file thành DataURL (base64)
-      function readFileAsDataURL(file) {
+      // Cải thiện hàm đọc file với nén ảnh
+      async function readFileAsDataURL(file, shouldResize = true) {
+        if (shouldResize && file.type.startsWith('image/')) {
+          // Nén ảnh trước khi convert base64
+          const resizedFile = await resizeImage(file);
+          file = resizedFile;
+        }
+        
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(String(reader.result));
           reader.onerror = reject;
           reader.readAsDataURL(file);
         });
+      }
+
+      // Thêm loading indicator
+      function showLoading(show = true, message = 'Đang gửi...') {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (!submitBtn) return;
+        
+        if (show) {
+          submitBtn.innerHTML = `
+            <span class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              ${message}
+            </span>
+          `;
+          submitBtn.disabled = true;
+        } else {
+          submitBtn.innerHTML = 'Gửi đơn đăng ký';
+          submitBtn.disabled = false;
+        }
       }
 
       // Submit lên Google Apps Script (ghi vào Google Sheet)
@@ -271,15 +328,10 @@
         errorEl.classList.add('hidden');
         errorEl.textContent = '';
 
-        // Lấy nút submit để disable khi đang gửi
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn ? submitBtn.textContent : '';
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Đang gửi...';
-        }
+        showLoading(true, 'Đang xử lý...');
 
         try {
+          // Thu thập dữ liệu form
           const fullName = (document.getElementById('fullName') || {}).value || '';
           const phone = (document.getElementById('phone') || {}).value || '';
           const facebook = (document.getElementById('facebook') || {}).value || '';
@@ -291,10 +343,22 @@
           const avatarFile = (document.getElementById('avatarImage') || {}).files?.[0];
           const transferFile = (document.getElementById('transferImage') || {}).files?.[0];
 
-          const [avatarDataUrl, transferDataUrl] = await Promise.all([
-            avatarFile ? readFileAsDataURL(avatarFile) : Promise.resolve(''),
-            transferFile ? readFileAsDataURL(transferFile) : Promise.resolve(''),
-          ]);
+          // Xử lý ảnh với thông báo tiến độ
+          let avatarDataUrl = '';
+          let transferDataUrl = '';
+
+          if (avatarFile || transferFile) {
+            showLoading(true, 'Đang nén ảnh...');
+
+            // Xử lý ảnh song song
+            [avatarDataUrl, transferDataUrl] = await Promise.all([
+              avatarFile ? readFileAsDataURL(avatarFile, true) : Promise.resolve(''),
+              transferFile ? readFileAsDataURL(transferFile, true) : Promise.resolve(''),
+            ]);
+          }
+
+          // Cập nhật thông báo đang gửi
+          showLoading(true, 'Đang gửi dữ liệu...');
 
           const payload = {
             apiKey: API_KEY,
@@ -306,16 +370,31 @@
             hasPartner,
             partnerName,
             shirtSize,
-            avatar: avatarFile ? { name: avatarFile.name, type: avatarFile.type, dataUrl: avatarDataUrl } : null,
-            transfer: transferFile ? { name: transferFile.name, type: transferFile.type, dataUrl: transferDataUrl } : null,
+            avatar: avatarFile ? { 
+              name: avatarFile.name, 
+              type: 'image/jpeg', // Sau khi nén thành JPEG
+              dataUrl: avatarDataUrl 
+            } : null,
+            transfer: transferFile ? { 
+              name: transferFile.name, 
+              type: 'image/jpeg', // Sau khi nén thành JPEG
+              dataUrl: transferDataUrl 
+            } : null,
           };
+
+          // Thêm timeout cho request
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
           const resp = await fetch(GAS_WEB_APP_URL, {
             method: 'POST',
             // Dùng text/plain để tránh preflight CORS
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload),
+            signal: controller.signal
           });
+
+          clearTimeout(timeoutId);
 
           if (!resp.ok && resp.type !== 'opaque') {
             throw new Error('Gửi dữ liệu thất bại.');
@@ -329,14 +408,17 @@
             success.classList.remove('hidden');
             success.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
+
         } catch (err) {
-          errorEl.textContent = 'Có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại hoặc liên hệ BTC.';
+          console.error('Submit error:', err);
+          if (err.name === 'AbortError') {
+            errorEl.textContent = 'Quá trình gửi bị timeout. Vui lòng kiểm tra kết nối mạng và thử lại.';
+          } else {
+            errorEl.textContent = 'Có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại hoặc liên hệ BTC.';
+          }
           errorEl.classList.remove('hidden');
         } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
-          }
+          showLoading(false);
         }
       });
     })();
